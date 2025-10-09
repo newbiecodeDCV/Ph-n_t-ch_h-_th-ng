@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CRMSchema",
+  "type": "object",
+  "required": ["call_id"],
+  "properties": {
+    "call_id": {"type": "string"},
+    "violations": {
+      "description": "Danh sách mức lỗi phát hiện trước (M1/M2/M3) áp cho nhóm NTT",
+      "type": "array",
+      "items": {"type": "string", "enum": ["M1", "M2", "M3"]}
+    },
+    "notes_length": {"type": "integer", "minimum": 0},
+    "ticket_created": {"type": "boolean"},
+    "updated_within_hours": {"type": "number", "minimum": 0}
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TranscriptSchema",
+  "type": "object",
+  "required": ["call_id", "segments"],
+  "properties": {
+    "call_id": {"type": "string"},
+    "call_type": {"type": "string", "enum": ["BH", "CSKH"]},
+    "segments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["speaker", "start", "end", "text"],
+        "properties": {
+          "speaker": {"type": "string", "enum": ["AGENT", "CUSTOMER"]},
+          "start": {"type": "number", "minimum": 0},
+          "end": {"type": "number", "minimum": 0},
+          "text": {"type": "string"}
+        }
+      }
+    },
+    "signals": {
+      "type": "object",
+      "properties": {
+        "wer_gap": {"type": "number", "minimum": 0},
+        "customer_repeat_count": {"type": "integer", "minimum": 0}
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

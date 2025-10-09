@@ -1,0 +1,62 @@
+version: 0.1
+
+call_types:
+  BH:
+    base_points:
+      KNGT: 2.0
+      KNBH: 7.0
+      NTT: 1.0
+  CSKH:
+    base_points:
+      KNGT: 4.0
+      KNBH: 5.0
+      NTT: 1.0
+
+criteria:
+  KNGT:
+    chao_xung_danh:
+      points:
+        BH: 0.2
+        CSKH: 0.4
+    ky_nang_noi:
+      # Tổng hợp tốc độ & giọng (accent). Nếu M1 → trừ theo points; M2 → trừ 50% nhóm; M3 → nhóm = 0
+      points:
+        BH: 0.2
+        CSKH: 0.4
+      speech_rate:
+        baseline_rate_wpm: 130        # tạm thời; sẽ ghi đè bằng docs/baselines.json nếu có
+        baseline_std_wpm: 25
+        thresholds:
+          M1:
+            sigma: 1.0
+            duration_ratio: 0.20
+          M2:
+            sigma: 2.0
+            duration_ratio: 0.30
+          M3:
+            sigma: 2.5
+            duration_ratio: 0.40
+      accent:
+        wer_gap_threshold:
+          M1: 0.10
+          M2: 0.20
+        customer_repeat_threshold:
+          M1: 1
+          M2: 3
+        # Nếu có bằng chứng hiểu sai nghiêm trọng → M3
+
+  NTT:
+    nhap_he_thong:
+      points:
+        BH: 1.0
+        CSKH: 1.0
+      penalties:
+        M1_ratio: 0.2
+        M2_ratio: 0.5
+        M3_ratio: 1.0
+
+penalties:
+  default:
+    M1: subtract_weight   # trừ đúng điểm quy đổi của tiêu chí con
+    M2: minus_half_group  # trừ 50% điểm nhóm
+    M3: zero_group        # nhóm = 0
