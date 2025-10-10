@@ -5,11 +5,11 @@ Mục tiêu: Xác định loại cuộc gọi (BH/CSKH) để áp đúng trọng
 Actors: CRM System (nguồn dữ liệu), Hệ thống QA.
 
 Tiền điều kiện:
-- Có dữ liệu CRM liên kết call hoặc transcript có 30s đầu
+- Có dữ liệu CRM liên kết call hoặc transcript
 
 Dòng chính:
 1) Đọc trường CRM ưu tiên (ticket/case/opportunity/campaign)
-2) Nếu chưa rõ, phân tích nội dung 30s đầu
+2) Nếu chưa rõ, phân tích nội dung 
 3) Nếu vẫn chưa rõ, áp fallback dựa vào tình trạng KH (existing/new)
 4) Ghi lại lý do và mức độ tự tin (confidence) cho audit
 

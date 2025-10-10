@@ -1,6 +1,10 @@
-# Use Case Overview – Hệ thống chấm điểm QA cuộc gọi
+# Use Case Overview – CASE CHUẨN (theo hình)
 
-Phạm vi: Tự động chấm điểm cuộc gọi BH/CSKH, kiểm tra tuân thủ CRM, báo cáo & gợi ý cải thiện. Call type được xác định tự động từ CRM và/hoặc nội dung đầu cuộc gọi.
+Phạm vi: Hai CASE chính của hệ thống AI QA Call theo chuẩn:
+1) Kiểm tra tuân thủ cập nhật CRM của Sales/CSKH (Compliance)
+2) Đánh giá chấm điểm cuộc gọi của Sales trao đổi với KH (Call Scoring & Coaching)
+
+Call type (BH/CSKH) được PHÁT HIỆN TỰ ĐỘNG từ audio/transcript (audio-only). CRM chỉ bắt buộc ở CASE 1 (Compliance) và nhóm NTT trong chấm điểm.
 
 Diễn viên (Actors):
 - Agent (Sales/CSKH)
@@ -9,36 +13,38 @@ Diễn viên (Actors):
 - Admin (Quản trị hệ thống)
 - CRM System (External)
 - PBX/Telephony (External)
+- Notification Service (External)
 
-Sơ đồ tổng quan (quan hệ actor ↔ use case):
+Sơ đồ tổng quan (quan hệ actor ↔ case):
 
 ```mermaid
 flowchart LR
-  Agent((Agent)) -- Xem điểm & feedback --> UC02[UC02 - View Reports]
-  Agent -- Gửi khiếu nại/giải trình --> UC07[UC07 - Feedback/Appeal]
+  Agent((Agent)) -- Xem báo cáo & coaching --> UC02[Call Scoring & Coaching]
+  Agent -- Nhận nhắc nhở CRM --> UC01[CRM Compliance]
 
-  QAR((QA Reviewer)) -- Review & Calibrate --> UC06[UC06 - Calibrate Baselines]
-  QAR -- Quản lý rules --> UC05[UC05 - Manage Rules]
+  QAR((QA Reviewer)) -- Review & Calibrate --> UC02
+  QAR -- Quản lý rules --> UC01
 
-  Manager((Team Manager)) -- Xem dashboard đội --> UC02
+  Manager((Team Manager)) -- Dashboard & Reports --> UC01
+  Manager -- Dashboard & Reports --> UC02
 
-  Admin((Admin)) -- Quản lý người dùng & vai trò --> UC08[UC08 - Manage Users & Roles]
+  Admin((Admin)) -- Users & Permissions --> ADM[Administration]
 
-  PBX((PBX)) -- Ghi âm --> UC01[UC01 - Score Call]
-  CRM((CRM System)) -- Dữ liệu CRM --> UC03[UC03 - Detect Call Type]
-  CRM -- Kiểm tra tuân thủ --> UC04[UC04 - Check CRM Compliance]
+  PBX((PBX)) -- Audio + metadata --> UC02
+  CRM((CRM)) -- Records (notes/ticket/opportunity) --> UC01
+  Notify((Notification)) -- Email/Chat/SMS --> Agent
 
-  UC01 --> UC02
-  UC03 --> UC01
-  UC04 --> UC02
+  UC01 --> Notify
+  UC02 --> Agent
 ```
 
-Danh sách Use Case:
-- UC01 – Score Call (Hệ thống): Chấm điểm tự động cuộc gọi
-- UC02 – View Reports (Agent/QA/Manager): Xem điểm, báo cáo, chi tiết lỗi & gợi ý
-- UC03 – Detect Call Type (Hệ thống + CRM): Xác định BH/CSKH
-- UC04 – Check CRM Compliance (Hệ thống + CRM): Kiểm tra nhập liệu/ticket/SLA
-- UC05 – Manage Rules (Admin/QA): Quản lý rule chấm điểm và trọng số
-- UC06 – Calibrate Baselines (QA/Analyst): Hiệu chỉnh baseline, ngưỡng
-- UC07 – Feedback/Appeal (Agent/QA): Gửi & xử lý giải trình
-- UC08 – Manage Users & Roles (Admin): Quản trị người dùng & phân quyền
+CASE & Use Cases tương ứng:
+- UC01 – CRM Compliance: Quét rules/bộ lọc → Phát hiện vi phạm M1/M2/M3 → Tạo nhắc nhở & Escalation → Theo dõi khắc phục → Báo cáo tổng hợp
+- UC02 – Call Scoring & Coaching: STT + diarization → Phát hiện call_type (audio-only) → Trích xuất tín hiệu → Chấm điểm theo chuẩn KNGT/KNBH/NTT → Tóm tắt → Khuyến nghị theo ngữ cảnh → Gợi ý kịch bản → Báo cáo chi tiết
+
+Các UC hỗ trợ (tùy dự án):
+- Manage Rules (Admin/QA): Cấu hình rules, trọng số
+- Calibrate Baselines (QA): Hiệu chỉnh baseline/thresholds
+- View Reports (Agent/Manager): Truy cập dashboard/báo cáo
+- Feedback/Appeal (Agent/QA): Gửi & xử lý khiếu nại
+- Manage Users & Roles (Admin): RBAC

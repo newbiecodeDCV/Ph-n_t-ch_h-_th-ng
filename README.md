@@ -14,27 +14,31 @@ phan-tich-thiet-ke-he-thong/
 └── ket-qua-phan-tich/         # Kết quả phân tích
 ```
 
-## Quy trình thực hiện
+## Quy trình thực hiện (Chuẩn hoá theo CASE chuẩn)
+
+CASE chuẩn (theo hình):
+1) CRM Compliance: Quét rules/bộ lọc → Phát hiện vi phạm → Nhắc nhở → Báo cáo
+2) Call Scoring & Coaching: STT + diarization → Phát hiện call_type (audio-only) → Trích xuất tín hiệu → Chấm điểm KNGT/KNBH/NTT theo chuẩn → Tóm tắt → Khuyến nghị → Kịch bản
 
 ### 1. Thu thập và phân tích yêu cầu
-- Định nghĩa các yêu cầu chức năng
+- Đặc tả 2 CASE chuẩn và KPI
 - Định nghĩa các yêu cầu phi chức năng
 - Phân tích stakeholder
 
 ### 2. Thiết kế kiến trúc hệ thống
-- Thiết kế kiến trúc tổng thể
-- Định nghĩa các component chính
-- Thiết kế cơ sở dữ liệu
+- Thiết kế tổng thể xoay quanh 2 CASE
+- Định nghĩa các component chính (Scoring, Call Type Detection, Compliance Scanner, Notification)
+- Thiết kế mô hình dữ liệu
 
 ### 3. Thiết kế chi tiết
-- Thiết kế giao diện người dùng
-- Thiết kế API
-- Thiết kế luồng dữ liệu
+- Thiết kế API/Schema vào-ra cho 2 CASE
+- Thiết kế luồng dữ liệu & báo cáo
+- Quy tắc chấm điểm theo chuẩn
 
 ### 4. Mô hình hóa hệ thống
-- Tạo các sơ đồ UML
-- Mô hình hóa quy trình nghiệp vụ
-- Thiết kế mô hình dữ liệu
+- Use Case (UC01 – Call Scoring, UC04 – CRM Compliance)
+- DFD/Sequence/Activity cập nhật (call_type audio-only)
+- ERD & Data Dictionary (có NTT/Reminders)
 
 ## Công cụ sử dụng
 - Markdown cho tài liệu

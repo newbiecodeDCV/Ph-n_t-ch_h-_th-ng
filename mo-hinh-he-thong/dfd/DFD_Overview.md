@@ -8,28 +8,31 @@ graph LR
   QA -- Báo cáo/Điểm --> Agent[Agent]
   QA -- Dashboard --> Manager[Manager]
   QA -- Review/Calibration --> QAReviewer[QA Reviewer]
+  QA -- Nhắc nhở CRM --> Notification[Email/Chat/SMS]
 ```
 
-# DFD – Scoring Process (Level 1)
+# DFD – Call Scoring (Level 1)
 
 ```mermaid
 graph LR
   A[Audio + Metadata] --> B[ASR + Diarization]
-  B --> C[Extraction Tín hiệu]
-  CRM[CRM] --> D[Call Type Detection]
-  D --> E[Tính điểm theo nhóm]
-  C --> E
-  E --> F[Báo cáo + Lưu trữ]
+  B --> C[Call Type Detection (audio-only)]
+  B --> D[Extraction Tín hiệu]
+  C --> E[Tính điểm theo nhóm (KNGT/KNBH/NTT)]
+  D --> E
+  E --> F[Tóm tắt + Khuyến nghị + Kịch bản]
+  F --> G[Báo cáo + Lưu trữ]
 ```
 
 # DFD – CRM Compliance (Level 1)
 
 ```mermaid
 graph LR
-  CRM[CRM] --> A[Lấy record theo Call ID]
-  A --> B[Kiểm tra trường bắt buộc]
-  B --> C[Đánh giá ghi chú]
-  C --> D[Kiểm tra ticket + SLA]
-  D --> E[Phân loại vi phạm]
-  E --> F[Gắn vào báo cáo]
+  CRM[CRM] --> A[Lấy records theo Call/Time]
+  A --> B[Áp Rules/Filters]
+  B --> C[Phát hiện vi phạm]
+  C --> D[Phân loại M1/M2/M3]
+  D --> E[Tạo nhắc nhở + Escalate]
+  E --> F[Theo dõi khắc phục]
+  F --> G[Báo cáo tổng hợp]
 ```

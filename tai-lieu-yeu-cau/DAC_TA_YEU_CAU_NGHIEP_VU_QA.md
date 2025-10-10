@@ -27,8 +27,7 @@
 - **Ban giám đốc**: Xem báo cáo tổng hợp
 
 ### 2.2. Hệ thống liên quan
-- **Tổng đài (PBX)**: Cung cấp file ghi âm
-- **CRM**: Cung cấp thông tin khách hàng và lịch sử tương tác
+- **CRM**: Cung cấp file ghi âm
 - **HR System**: Nhận điểm KPI để tính lương thưởng
 
 ## 3. YÊU CẦU CHỨC NĂNG
